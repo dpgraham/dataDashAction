@@ -43,20 +43,20 @@
      * Helper method that get either value or html depending on whether the element is a form field or an inline element
      * @param val
      */
-    $.dataDash.fn.getValOrHtml = function(val){
+    $.dataDash.fn.getValOrHtml = function(){
         element = $(this)[0];
         var nodeName = element.nodeName.toLowerCase();
         if(nodeName==="input" || nodeName==="textarea"){
             return $(element).val();
         } else{
-            return $(element).html(val);
+            return $(element).html();
         }
     }
 
     // Set init's prototype to $.dataDash.fn
     $.dataDash.fn.init.prototype = $.dataDash.fn;
 
-    $.dataDash._prefix = "data-dg";
+    $.dataDash.prefix = "data-dg";
 
     $.dataDash.BEHAVIORS = {};
 
@@ -68,16 +68,12 @@
 
         // Set the attribute value if one was provided
         if(!!attrValue)
-            this.attr($.dataDash._prefix + behaviorName, attrValue);
+            this.attr($.dataDash.prefix + behaviorName, attrValue);
 
         // Get the attribute value
-        var value = this.attr($.dataDash._prefix + behaviorName);
+        var value = this.attr($.dataDash.prefix + behaviorName);
 
-        if(value){
-            behaviors[behaviorName].callback.call(this, value);
-        } else{
-            throw "Behavior requires an attribute value";
-        }
+        behaviors[behaviorName].callback.call(this, value);
 
         // Return the object for chaining
         return this;
@@ -89,7 +85,7 @@
      */
 
     // Prefix that's used to defined 'data-' attributes
-    $.dataDash._prefix = "data-dg-";
+    $.dataDash.prefix = "data-dg-";
 
     // Keep a list of all the registered 'behaviors'
     var behaviors = {};
@@ -120,7 +116,7 @@
 
             // Bind all registered behaviors
             $.each($.dataDash.BEHAVIORS, function(behaviorName){
-                var dataAttrName = $.dataDash._prefix + behaviorName;
+                var dataAttrName = $.dataDash.prefix + behaviorName;
                 $("*[" + dataAttrName + "]").each(function(idx, element){
                     $.dataDash(element).bindBehavior(behaviorName, $(element).attr(dataAttrName));
                 });
@@ -133,7 +129,7 @@
             }
 
             // Bind the provided behavior
-            var dataAttrName = $.dataDash._prefix + behaviorName;
+            var dataAttrName = $.dataDash.prefix + behaviorName;
             $("*[" + dataAttrName + "]").each(function(idx, element){
                 $.dataDash(element).bindBehavior(behaviorName, $(element).attr(dataAttrName));
             });

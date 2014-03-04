@@ -5,16 +5,17 @@
     <script type="text/javascript" src="jQuery.js"></script>
     <script type="text/javascript" src="../src/dataDashCore.js"></script>
     <script type="text/javascript" src="../src/dataDashArithmetic.js"></script>
+    <script type="text/javascript" src="../src/dataDashUnitConversions.js"></script>
 </head>
 <body>
+    <p data-dg-unit="m" data-dg-roundBy="2">1.2454</p>
+
     <input value="2.767676" data-dg-roundBy="2"/>
-    <input type="text" class='multiplicand'/>
-    <input type="text" class='multiplicand'/>
-    <input type="text" class='product' data-dg-sumOf='.multiplicand'/>
-    <p class='product' data-dg-sumOf='.multiplicand'></p>
     <script type="text/javascript">
         //$.dataDash(".product").bindBehavior($.dataDash.BEHAVIORS.PRODUCT_OF, ".multiplicand");
-        $.dataDash.bindBehaviorAll("roundBy");
+        $.dataDash.bindBehaviorAll();
+        $.dataDash.unitConversions.setUnitFamily("m");
+        $("p").trigger("unitFamilyChange", "us");
     </script>
 </body>
 </html>

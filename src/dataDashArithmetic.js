@@ -14,7 +14,7 @@
                 // Product starts at 1, multiply each value one-by-one
                 var product = 1;
                 $(attrValue).each(function(idx, element){
-                    product = product * parseFloat($(element).val() || $(element).html() || 1);
+                    product = product * parseFloat($.dataDash(element).getValOrHtml() || 1);
                 })
 
                 // Set the new value
@@ -39,7 +39,7 @@
                 // Sum starts at 0, multiply each value one-by-one
                 var sum = 0;
                 $(attrValue).each(function(idx, element){
-                    sum += parseFloat($(element).val() || $(element).html() || 0);
+                    sum += parseFloat($.dataDash(element).getValOrHtml() || 0);
                 })
 
                 // Set the new value
@@ -51,6 +51,12 @@
         return this;
     };
 
+    /**
+     * Round a value to certain decimal places
+     * @param value
+     * @param factor
+     * @returns {number}
+     */
     var roundBy = function(value, factor){
         value = parseFloat(value);
         factor = parseInt(factor);
@@ -61,7 +67,7 @@
     var roundByCallback = function(attrValue){
         $(this).val( roundBy($(this).val(), attrValue) );
         $(this).change(function(){
-            $(this).val( roundBy($(this).val(), attrValue) );
+            $.dataDash(this).setValOrHtml( roundBy($.dataDash(this).getValOrHtml(), attrValue) );
         });
     };
 
