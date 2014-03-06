@@ -65,8 +65,11 @@
     };
 
     var roundByCallback = function(attrValue){
+        $.dataDash(this).backupValue();
         $(this).val( roundBy($(this).val(), attrValue) );
+
         $(this).change(function(){
+            $.dataDash(this).backupValue();
             $.dataDash(this).setValOrHtml( roundBy($.dataDash(this).getValOrHtml(), attrValue) );
         });
     };

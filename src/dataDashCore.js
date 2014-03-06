@@ -46,7 +46,11 @@
     $.dataDash.fn.getValOrHtml = function(){
         element = $(this)[0];
         var nodeName = element.nodeName.toLowerCase();
-        if(nodeName==="input" || nodeName==="textarea"){
+        var dataDashValue = this.attr($.dataDash.prefix + "value");
+
+        if(typeof(dataDashValue)!="undefined"){
+            return dataDashValue;
+        } else if(nodeName==="input" || nodeName==="textarea"){
             return $(element).val();
         } else{
             return $(element).html();
@@ -77,6 +81,14 @@
 
         // Return the object for chaining
         return this;
+    }
+
+    /**
+     * Helper function to backup a value (example: the roundBy function backs up the value in case you need
+     * the un-rounded value later)
+     */
+    $.dataDash.fn.backupValue = function(){
+        this.attr($.dataDash.prefix + "value", this.getValOrHtml());
     }
 
 

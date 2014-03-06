@@ -1,0 +1,10 @@
+{
+    "name": "dataDashAction",
+    "version": "0.0.1",
+    "author": "dpgraham",
+    "description": "Use data-* attributes to add behaviours to your HTML markup",
+    "dependencies": {
+        "grunt-cli": "~0.1.13",
+        "bower": "~1.2.8"
+    }
+}
