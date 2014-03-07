@@ -8,7 +8,7 @@
     var productOfCallback = function(attrValue){
 
         // Whenever any elements targeted by attrValue change, update the product of this
-        $(attrValue).change(function(ctx){
+        var prodOfFunc = function(ctx){
             return function(){
 
                 // Product starts at 1, multiply each value one-by-one
@@ -21,7 +21,10 @@
                 ctx.setValOrHtml(product);
                 ctx.trigger("change");
             }
-        }(this));
+        }(this);
+
+        $(attrValue).change(prodOfFunc);
+        prodOfFunc.call();
 
         return this;
     };
@@ -33,7 +36,7 @@
      */
     var sumOfCallback = function(attrValue){
         // Whenever any elements targeted by attrValue change, update the product of this
-        $(attrValue).change(function(ctx){
+        var sumOfFunc = function(ctx){
             return function(){
 
                 // Sum starts at 0, multiply each value one-by-one
@@ -46,7 +49,10 @@
                 ctx.setValOrHtml(sum);
                 ctx.trigger("change");
             }
-        }(this));
+        }(this);
+
+        $(attrValue).change(sumOfFunc);
+        sumOfFunc.call();
 
         return this;
     };

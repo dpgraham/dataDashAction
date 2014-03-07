@@ -35,6 +35,7 @@
                 $(element).val(val);
             } else{
                 $(element).html(val);
+                $(element).trigger("change");
             }
         });
     }
