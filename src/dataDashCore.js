@@ -28,15 +28,23 @@
      * Helper method that sets either value or html depending on whether the element is a form field or an inline element
      * @param val
      */
-    $.dataDash.fn.setValOrHtml = function(val){
+    $.dataDash.fn.setValOrHtml = function(val, blockChangeEvent){
         $.each(this, function(idx, element){
             var nodeName = element.nodeName.toLowerCase();
             if(nodeName==="input" || nodeName==="textarea"){
+                if($(element).val() == val){
+                    return;
+                }
                 $(element).val(val);
             } else{
+                if($(element).html() == val){
+                    return;
+                }
                 $(element).html(val);
-                $(element).trigger("change");
             }
+
+            if(!blockChangeEvent)
+                $(element).trigger("change");
         });
     }
 
