@@ -1,16 +1,5 @@
 (function(dataDash){
 
-    dataDash.unitConversions = {};
-
-    dataDash.unitConversions.setUnitFamily = function(unitFamily){
-        for(var i=0; i<boundElements.length; i++){
-            $(dataDash.unitConversions.boundElements).trigger("unitFamilyChange", unitFamily);
-        }
-    }
-
-    var boundElements = [];
-
-
     /**
      * Convert a value to a different unit
      * @param val {number} Current value
@@ -128,9 +117,6 @@
      * Bind the unit conversion behavior to a selection of elements
      */
     var unitConversionBehaviorCallback = function(){
-
-        // Add this element to the list
-        boundElements[boundElements.length] = $(this);
 
         onUnitFamilyChange = function(evt, unitFamily){
 

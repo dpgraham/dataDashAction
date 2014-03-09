@@ -19,7 +19,6 @@
 
                 // Set the new value
                 ctx.setValOrHtml(product);
-                ctx.trigger("change");  // TODO: Is this redundant?
             }
         }(this);
 
@@ -35,6 +34,7 @@
      * @returns {*}
      */
     var sumOfCallback = function(attrValue){
+
         // Whenever any elements targeted by attrValue change, update the product of this
         var sumOfFunc = function(ctx){
             return function(){
@@ -47,7 +47,6 @@
 
                 // Set the new value
                 ctx.setValOrHtml(sum);
-                ctx.trigger("change");  // TODO: Is this redundant?
             }
         }(this);
 
@@ -70,6 +69,10 @@
         return parseInt(value * factor) / factor;
     };
 
+    /**
+     * Function that binds the 'roundBy' behavior
+     * @param attrValue
+     */
     var roundByCallback = function(attrValue){
         $(this).val( roundBy($(this).val(), attrValue) );
 
@@ -78,13 +81,22 @@
         });
     };
 
+    /**
+     * Convert value to shorthand form
+     * @param val {number}
+     * @returns {string}  Shorthand form
+     * @private
+     */
     var _toShorthand = function(val){
         val = parseFloat(val);
+
+        // Use an absolute value, we'll restore the sign at the end
         var isNegative = val < 0;
         val = Math.abs(val);
-        console.log(val);
 
         if(val >= 1000000000000){
+
+            // If value greater than 100 billion, use exponential form
             val += "";
             var e_index = val.indexOf("e+");
             if(e_index >= 0){
@@ -97,13 +109,18 @@
                 val = val[0] + "." + val[1] + val[2] + "e" + (val.length - 1);
             }
         } else if(val >= Math.pow(10,9)){
+
+            // Billion
             val = roundBy(val / 1000000000, 2) + "b";
 
         } else if(val >= Math.pow(10,6)){
+
+            // million
             val = roundBy(val / 1000000, 2) + "m";
 
         } else if (val < 0.000001){
 
+            // Less than 0.000001 uses exponential form
             if(val!=0){
                 val = val + "";
                 if(val.indexOf("e") < 0){
@@ -139,6 +156,8 @@
                 }
             }
         } else if(val < 1){
+
+            // Anything else less than 1 rounds to maximum three digits
             val = val + "";
             var i = val.length - 1;
             var trailing_chars = 0;
@@ -158,9 +177,13 @@
             val = val;
         }
 
+        // Return the value with the sign restored
         return (isNegative ? "-" : "") + val;
     }
 
+    /**
+     * Callback that binds the 'shorthand' behavior
+     */
     var shorthandFormCallback = function(){
         var makeShorthandCallback = function(ctx){
             return function(e, val){
@@ -184,6 +207,7 @@
     };
 
 
+    // Register these four behaviors
     dataDash.registerBehavior("productOf", productOfCallback);
     dataDash.registerBehavior("sumOf", sumOfCallback);
     dataDash.registerBehavior("roundBy", roundByCallback);
