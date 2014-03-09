@@ -43,8 +43,9 @@
                 $(element).html(val);
             }
 
-            if(!blockChangeEvent)
-                $(element).trigger("change");
+            if(!blockChangeEvent){
+                $(element).trigger("change", val);
+            }
         });
 
         return this;
@@ -98,8 +99,8 @@
      * Helper function to backup a value (example: the roundBy function backs up the value in case you need
      * the un-rounded value later)
      */
-    $.dataDash.fn.backupValue = function(){
-        this.attr($.dataDash.prefix + "value", this.getValOrHtml());
+    $.dataDash.fn.backupValue = function(val){
+        this.attr($.dataDash.prefix + "value", typeof(val)!="undefined" ? val : this.getValOrHtml());
     }
 
 
