@@ -28,6 +28,7 @@
         var measurement = false;
         var weight = false;
 
+
         switch(unitIn){
 
             // Measurement units
@@ -54,13 +55,13 @@
 
         var isCompatible;
 
-        // Now convert them from 'mm' or 'g' to unitOut
+
         switch(unitOut){
 
             // Measurement units
             case "km": val = perUnit ? val * 1000000 : val / 1000000; isCompatible = measurement; break;
             case "m": val = perUnit ? val * 1000 : val / 1000; isCompatible = measurement; break;
-            case "cm": val = perUnit ? val * 100 : val / 100; isCompatible = measurement; break;
+            case "cm": val = perUnit ? val * 10 : val / 10; isCompatible = measurement; break;
             case "mm": isCompatible = measurement; break;
 
             case "in": val = perUnit ? val * 25.4 : val / 25.4; isCompatible = measurement; break;
@@ -125,15 +126,13 @@
 
     /**
      * Bind the unit conversion behavior to a selection of elements
-     * @param attrValue
      */
     var unitConversionBehaviorCallback = function(){
 
         // Add this element to the list
         boundElements[boundElements.length] = $(this);
 
-        // Bind to the 'unitFamilyChange' event
-        $(this).bind("unitFamilyChange", function(evt, unitFamily){
+        onUnitFamilyChange = function(evt, unitFamily){
 
             // What is the current value?
             var currentValue = parseFloat($.dataDash(this).getValOrHtml());
@@ -154,13 +153,28 @@
                 $(this).trigger("change");
             }
 
-        });
+        };
+
+        // Bind to the 'unitFamilyChange' event
+        $(this).bind("unitFamilyChange", onUnitFamilyChange);
     }
 
     /**
-     * Any HTML element with the attribute 'data-dg-productOf'
+     *
+     */
+    var unitLabelCallback = function(){
+        $.dataDash(this).backupValue();
+        var onUnitFamilyChange = function(){
+            // TODO: Write code to handle unit family being changed
+        }
+        $(this).bind(onUnitFamilyChange);
+    }
+
+    /**
+     * Any HTML element with the attribute 'data-dg-unit'
      */
     dataDash.registerBehavior("unit", unitConversionBehaviorCallback);
+    dataDash.registerBehavior("unitLabel", unitLabelCallback);
     dataDash.registerBehavior("perUnit", function(){});
 
 }($.dataDash));

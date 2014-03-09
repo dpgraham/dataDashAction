@@ -46,6 +46,8 @@
             if(!blockChangeEvent)
                 $(element).trigger("change");
         });
+
+        return this;
     }
 
     /**
