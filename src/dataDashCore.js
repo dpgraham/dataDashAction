@@ -83,8 +83,7 @@
     $.dataDash.fn.bindBehavior = function(behaviorName, attrValue){
 
         // Set the attribute value if one was provided
-        if(!!attrValue)
-            this.attr($.dataDash.prefix + behaviorName, attrValue);
+        this.attr($.dataDash.prefix + behaviorName, attrValue || "");
 
         // Get the attribute value
         var value = this.attr($.dataDash.prefix + behaviorName);

@@ -1,3 +1,35 @@
+test( "Test unit labelling", function(){
+    var test_table = [
+        ["us", "m", "f", "metric"],
+        ["us", "kg", "lbs", "metric"],
+        ["us", "tonne", "ton", "metric"],
+        ["us", "tonnes", "tons", "metric"],
+        ["us", "cm", "in", "metric"],
+        ["us", "centimeters", "inches", "metric"],
+        ["us", "millimetres", "inches", "metric"],
+        ["us", "g", "oz", "metric"],
+        ["us", "kilograms", "pounds", "metric"],
+        ["us", "kilogram", "pound", "metric"],
+        ["us", "grams", "ounces", "metric"]
+    ];
+
+    for(var i = 0; i < test_table.length; i++){
+        var s1 = $.dataDash("<div></div>").setValOrHtml(test_table[i][1]).bindBehavior("unitLabel");
+        s1.trigger("unitFamilyChange", test_table[i][0]);
+        equal(s1.getValOrHtml(), test_table[i][2], test_table[i][1] + " is " + test_table[i][2] + " in " + test_table[i][0]);
+        s1.trigger("unitFamilyChange", test_table[i][3]);
+        equal(s1.getValOrHtml(), test_table[i][1], "gets restored from " + test_table[i][2] + " to " + test_table[i][1]);
+    }
+
+    for(var i = 0; i < test_table.length; i++){
+        var s1 = $.dataDash("<div></div>").setValOrHtml(test_table[i][1]).bindBehavior("unitLabel");
+        s1.trigger("unitFamilyChange", test_table[i][3]);
+        equal(s1.getValOrHtml(), test_table[i][2], test_table[i][1] + " is " + test_table[i][2] + " in " + test_table[i][3]);
+        s1.trigger("unitFamilyChange", test_table[i][0]);
+        equal(s1.getValOrHtml(), test_table[i][1], "gets restored from " + test_table[i][2] + " to " + test_table[i][1]);
+    }
+});
+
 test( "Test unit conversions", function() {
 
     // Taken from: http://stackoverflow.com/questions/13177673/decimal-value-assertion-in-q-unit

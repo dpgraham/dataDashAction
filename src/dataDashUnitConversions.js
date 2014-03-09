@@ -145,15 +145,83 @@
         $(this).bind("unitFamilyChange", onUnitFamilyChange);
     }
 
+    var equivalentUnitNames = function(unit_in, unit_family){
+
+        unit_family = unit_family && unit_family.toLowerCase();
+
+        var metricToUS = {
+
+            // Length
+            "mm": "in",
+            "millimeters": "inches",
+            "millimeter": "inch",
+            "millimetre": "inches",
+            "millimetres": "inches",
+            "cm": "in",
+            "centimeters": "inches",
+            "centimeter": "inch",
+            "centimetre": "inches",
+            "centimetres": "inches",
+            "m": "f",
+            "meters": "feet",
+            "meter": "foot",
+            "metre": "foot",
+            "metres": "feet",
+
+            // Weight
+            "gram": "ounce",
+            "grams": "ounces",
+            "g": "oz",
+            "kg": "lbs",
+            "kilogram": "pound",
+            "kilograms": "pounds",
+            "tonne": "ton",
+            "tonnes": "tons",
+        }
+
+        var usToMetric = {
+
+            // Length
+            "in": "cm",
+            "inch": "centimeter",
+            "inches": "centimeters",
+            "f": "m",
+            "feet": "meters",
+            "foot": "meter",
+
+            // Weight
+            "lbs": "kg",
+            "lb": "kg",
+            "pounds": "kilograms",
+            "pound": "kilogram",
+            "ton": "tonne",
+            "tons": "tonnes",
+        }
+
+        if(unit_family=="us"){
+            return metricToUS[unit_in] || unit_in;
+        } else if(unit_family=="us"){
+            return usToMetric[unit_in] || unit_in;
+        } else {
+            return metricToUS[unit_in] || usToMetric[unit_in] || unit_in
+        }
+    }
+
     /**
      *
      */
     var unitLabelCallback = function(){
-        $.dataDash(this).backupValue();
-        var onUnitFamilyChange = function(){
-            // TODO: Write code to handle unit family being changed
+        $(this).attr($.dataDash.prefix + "prevUnit", $.dataDash(this).getValOrHtml());
+        var onUnitFamilyChange = function(event, unit_family){
+            var curr_value = $.dataDash(this).getValOrHtml();
+            var prev_unit = $(this).attr($.dataDash.prefix + "prevUnit");
+            if(equivalentUnitNames(prev_unit) == curr_value){
+                $.dataDash(this).setValOrHtml(prev_unit);
+            } else {
+                $.dataDash(this).setValOrHtml(equivalentUnitNames(curr_value, unit_family));
+            }
         }
-        $(this).bind(onUnitFamilyChange);
+        $(this).bind("unitFamilyChange", onUnitFamilyChange);
     }
 
     /**
@@ -161,6 +229,7 @@
      */
     dataDash.registerBehavior("unit", unitConversionBehaviorCallback);
     dataDash.registerBehavior("unitLabel", unitLabelCallback);
-    dataDash.registerBehavior("perUnit", function(){});
+    dataDash.registerBehavior("perUnit");
+    dataDash.registerBehavior("prevUnit");
 
 }($.dataDash));
