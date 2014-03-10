@@ -1,82 +1,60 @@
 (function(dataDash){
 
     /**
+     * Unit conversion table. Translate units to a standard unit (mm for length, g for weight)
+     */
+    var conversion_table = {
+
+        // Translate length to mm
+        "mm": [1, "measure"],
+        "km": [100000, "measure"],
+        "m": [1000, "measure"],
+        "cm": [10, "measure"],
+        "in": [25.4, "measure"],
+        "f": [304.8, "measure"],
+        "y": [914.4, "measure"],
+        "mi": [1609344, "measure"],
+
+        // Translate weights to grams
+        "g": [1, "weight"],
+        "oz": [28.3495, "weight"],
+        "lbs": [453.592, "weight"],
+        "kg": [1000, "weight"],
+        "ton": [907185, "weight"],
+        "tonne": [1000000, "weight"]
+
+    };
+
+    /**
      * Convert a value to a different unit
      * @param val {number} Current value
-     * @param unitIn {string} Current unit
-     * @param unitOut {string} Desired unit
+     * @param unit_in {string} Current unit
+     * @param unit_out {string} Desired unit
      * @param perUnit {boolean} Is the value per unit or number of units?
      * @private
      */
-    var _convert = function(val, unitIn, unitOut, perUnit){
-        unitIn = unitIn.toLowerCase();
-        unitOut = unitOut.toLowerCase();
+    var _convert = function(val, unit_in, unit_out, perUnit){
+        unit_in = unit_in.toLowerCase();
+        unit_out = unit_out.toLowerCase();
         val = parseFloat(val);
 
         // Convert the provided value to 'mm' or 'g'
         var measurement = false;
         var weight = false;
 
+        // Convert unit to intermediary unit of measure
+        var factor = conversion_table[unit_in][0];
+        var unit_in_measure_type = conversion_table[unit_in][1];
+        val = perUnit ? val / factor : val * factor;
 
-        switch(unitIn){
 
-            // Measurement units
-            case "mm": measurement = true; break;
-            case "km": val = perUnit ? val / 1000000 : val * 1000000; measurement = true; break;
-            case "m": val = perUnit ? val / 1000 : val * 1000; measurement = true; break;
-            case "cm": val = perUnit ? val / 100 : val * 100; measurement = true; break;
-            case "in": val = perUnit ? val / 25.4 : val * 25.4; measurement = true; break;
-            case "f": val = perUnit ? val / 304.8 : val * 304.8; measurement = true; break;
-            case "y": val = perUnit ? val / 914.4 : val * 914.4; measurement = true; break;
-            case "mi": val = perUnit ? val / 1609344 : val * 1609344; measurement = true; break;
-
-            // Weight units
-            case "g": weight = true; break;
-            case "oz": val = perUnit ? val / 28.3495 : val * 28.3495; weight = true; break;
-            case "lbs": val = perUnit ? val / 453.592 : val * 453.592; weight = true; break;
-            case "kg": val = perUnit ? val / 1000 : val * 1000; weight = true; break;
-            case "ton": val = perUnit ? val / 1016046.91 : val * 1016046.91; weight = true; break;
-            case "tonne": val = perUnit ? val / 1000000 : val * 1000000; weight = true; break;
-
-            default: throw(unitIn + " is invalid");
-
+        // Convert from intermediary unit of measure to unit_out
+        factor = conversion_table[unit_out][0];
+        var unit_out_measure_type = conversion_table[unit_out][1];
+        if(unit_in_measure_type != unit_out_measure_type){
+            throw(unit_in + " and " + unit_out + " are incompatible units of measure");
         }
-
-        var isCompatible;
-
-
-        switch(unitOut){
-
-            // Measurement units
-            case "km": val = perUnit ? val * 1000000 : val / 1000000; isCompatible = measurement; break;
-            case "m": val = perUnit ? val * 1000 : val / 1000; isCompatible = measurement; break;
-            case "cm": val = perUnit ? val * 10 : val / 10; isCompatible = measurement; break;
-            case "mm": isCompatible = measurement; break;
-
-            case "in": val = perUnit ? val * 25.4 : val / 25.4; isCompatible = measurement; break;
-            case "f": val = perUnit ? val * 304.8 : val / 304.8; isCompatible = measurement; break;
-            case "y": val = perUnit ? val * 914.4 : val / 914.4; isCompatible = measurement; break;
-            case "mi": val = perUnit ? val * 1609344 : val / 1609344; isCompatible = measurement; break;
-
-            // Weight units
-            case "oz": val = perUnit ? val * 28.3495 : val / 28.3495; isCompatible = weight; break;
-            case "lbs": val = perUnit ? val * 453.592 : val / 453.592; isCompatible = weight; break;
-            case "ton": val = perUnit ? val * 1016046.91 : val / 1016046.91; isCompatible = weight; break;
-
-            case "g": isCompatible = weight; break;
-            case "kg": val = perUnit ? val * 1000 : val / 1000; isCompatible = weight; break;
-            case "tonne": val = perUnit ? val * 1000000 : val / 1000000; isCompatible = weight; break;
-
-            default: throw(unitOut + " is invalid");
-        }
-
-        // Throw an exception if units are incompatible
-        if(!isCompatible){
-            throw(unitIn + " and " + unitOut + " are incompatible units of measure");
-        }
-
-        // Return the converted unit of measure
-        return val;
+        return perUnit ? val * factor : val / factor;
     };
 
     /**
@@ -118,6 +96,8 @@
      */
     var unitConversionBehaviorCallback = function(){
 
+        $(this).attr($.dataDash.prefix + "prevUnit", $.dataDash(this).attr($.dataDash.prefix + "unit"));
+
         onUnitFamilyChange = function(evt, unitFamily){
 
             // What is the current value?
@@ -127,10 +107,18 @@
             var unitIn = $.dataDash(this).attr($.dataDash.prefix + "unit");
 
             // What is the equivalent unit of measure in the provided unit family?
-            var unitOut = _getEquivalentUnit(unitIn, unitFamily);
+            // var unitOut = _getEquivalentUnit(unitIn, unitFamily);
+            var prev_unit = $(this).attr($.dataDash.prefix + "prevUnit");
+
+            // Are we restoring the unit to it's old value or are we converting it to it's equivalent?
+            if(prev_unit && _getEquivalentUnit(prev_unit, unitFamily) == prev_unit){
+                unitOut = prev_unit;
+            } else {
+                unitOut = _getEquivalentUnit(unitIn, unitFamily);
+            }
 
             // Is this value number of units or per unit?
-            var perUnit = !!$(this).attr($.dataDash.prefix + "perUnit");
+            var perUnit = typeof($(this).attr($.dataDash.prefix + "perUnit"))!="undefined";
 
             // Set the value to the converted value
             if(unitIn != unitOut){

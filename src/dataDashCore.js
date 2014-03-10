@@ -88,7 +88,10 @@
         // Get the attribute value
         var value = this.attr($.dataDash.prefix + behaviorName);
 
-        behaviors[behaviorName].callback.call(this, value);
+        // Call the function associated with this behavior (if there is one)
+        if(typeof(behaviors[behaviorName].callback)=="function"){
+            behaviors[behaviorName].callback.call(this, value);
+        }
 
         // Return the object for chaining
         return this;
