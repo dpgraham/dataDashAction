@@ -99,7 +99,6 @@
         $(this).attr($.dataDash.prefix + "prevUnit", $.dataDash(this).attr($.dataDash.prefix + "unit"));
 
         onUnitFamilyChange = function(evt, unitFamily){
-
             // What is the current value?
             var currentValue = parseFloat($.dataDash(this).getValOrHtml());
 
@@ -110,7 +109,7 @@
             // var unitOut = _getEquivalentUnit(unitIn, unitFamily);
             var prev_unit = $(this).attr($.dataDash.prefix + "prevUnit");
 
-            // Are we restoring the unit to it's old value or are we converting it to it's equivalent?
+            // Are we restoring the unit to it's h
             if(prev_unit && _getEquivalentUnit(prev_unit, unitFamily) == prev_unit){
                 unitOut = prev_unit;
             } else {
@@ -133,6 +132,12 @@
         $(this).bind("unitFamilyChange", onUnitFamilyChange);
     }
 
+    /**
+     * Get the equivalent unit from the opposite unit family
+     * @param unit_in
+     * @param unit_family
+     * @returns {*}
+     */
     var equivalentUnitNames = function(unit_in, unit_family){
 
         unit_family = unit_family && unit_family.toLowerCase();
@@ -183,7 +188,7 @@
             "pounds": "kilograms",
             "pound": "kilogram",
             "ton": "tonne",
-            "tons": "tonnes",
+            "tons": "tonnes"
         }
 
         if(unit_family=="us"){

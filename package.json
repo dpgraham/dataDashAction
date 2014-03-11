@@ -5,6 +5,7 @@
     "description": "Use data-* attributes to add behaviours to your HTML markup",
     "dependencies": {
         "grunt-cli": "~0.1.13",
-        "bower": "~1.2.8"
+        "bower": "~1.2.8",
+        "grunt-contrib-jshint": "~0.7.0"
     }
 }

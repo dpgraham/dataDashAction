@@ -1,17 +1,17 @@
 module.exports = function(grunt) {
 
     // Load the plugin that provides the "uglify" task.
-    grunt.loadNpmTasks('grunt-contrib-qunit');
+    grunt.loadNpmTasks('grunt-contrib-jshint');
 
     grunt.initConfig({
 
-        qunit: {
-
+        jshint: {
+            files: "src/*.js"
         }
 
     });
 
     // Default task(s).
-    grunt.registerTask('test', ['qunit']);
+    // grunt.registerTask('test', ['qunit']);
 
 };
