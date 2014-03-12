@@ -35,16 +35,16 @@ test( "Test unit labelling", function(){
 test( "Test unit conversions", function() {
 
     var test_conversions_table = [
-        /*["m", 100, "f", 328.084],
+        ["m", 100, "f", 328.084],
         ["cm", 10000, "in", 3937.0079],
         ["g", 23.36, "oz", 0.824],
-        ["kg", 84.9, "lbs", 187.1725],*/
-        ["tonne", 100, "ton", 110.231]/*,
+        ["kg", 84.9, "lbs", 187.1725],
+        ["tonne", 100, "ton", 110.231],
         ["m", 287656, "f", 943753.281],
         ["cm", 0.00065600072, "in", 0.000258268],
         ["g", 1.33, "oz", 0.0469144],
         ["kg", 0.56, "lbs", 1.23459],
-        ["tonne", 1.5676, "ton", 1.72798]*/
+        ["tonne", 1.5676, "ton", 1.72798]
     ];
 
 
@@ -66,7 +66,6 @@ test( "Test unit conversions", function() {
 
         // Translate to us (should be different
         div.trigger("unitFamilyChange", "us");
-        console.log(div.getValOrHtml(), tc[i][3]);
         decEqual(parseFloat(div.getValOrHtml()), tc[i][3], 10, tc[i][1] + " " + tc[i][0] + " converted to us, should be " + tc[i][3] + " " + tc[i][2]);
 
         // Bind the behaviour as us by default

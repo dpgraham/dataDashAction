@@ -52,7 +52,7 @@
     }
 
     /**
-     * Helper method that get either value or html depending on whether the element is a form field or an inline element
+     * Helper method that gets either value or html depending on whether the element is a form field or an inline element
      * @param val
      */
     $.dataDash.fn.getValOrHtml = function(){
@@ -83,18 +83,35 @@
     $.dataDash.fn.bindBehavior = function(behaviorName, attrValue){
 
         // Set the attribute value if one was provided
-        this.attr($.dataDash.prefix + behaviorName, attrValue || "");
-
-        // Get the attribute value
         var value = this.attr($.dataDash.prefix + behaviorName);
+        if(typeof(value)=="undefined"){
+            this.attr($.dataDash.prefix + behaviorName, attrValue || "");
+            value = this.attr($.dataDash.prefix + behaviorName);
+        }
 
         // Call the function associated with this behavior (if there is one)
         if(typeof(behaviors[behaviorName].callback)=="function"){
-            behaviors[behaviorName].callback.call(this, value);
+            $(this).each(function(idx, element){
+                behaviors[behaviorName].callback.call($.dataDash(element), value);
+            });
         }
 
         // Return the object for chaining
         return this;
+    }
+
+    /**
+     *
+     */
+    $.dataDash.fn.bindAllBehaviors = function(){
+
+        // Bind all registered behaviors
+        $.each($.dataDash.BEHAVIORS, function(behaviorName){
+            var dataAttrName = $.dataDash.prefix + behaviorName;
+            $(this).each(function(idx, element){
+                $.dataDash(element).bindBehavior(behaviorName, $(element).attr(dataAttrName));
+            });
+        });
     }
 
     /**
@@ -137,16 +154,14 @@
      */
     $.dataDash.bindBehaviorAll = function(behaviorName){
 
-
         if(!behaviorName){
 
             // Bind all registered behaviors
             $.each($.dataDash.BEHAVIORS, function(behaviorName){
                 var dataAttrName = $.dataDash.prefix + behaviorName;
-                $("*[" + dataAttrName + "]").each(function(idx, element){
-                    $.dataDash(element).bindBehavior(behaviorName, $(element).attr(dataAttrName));
-                });
+                $.dataDash("*[" + dataAttrName + "]").bindBehavior(behaviorName);
             });
+
         } else {
 
             // Throw exception if it's an unregistered behavior name
@@ -156,9 +171,7 @@
 
             // Bind the provided behavior
             var dataAttrName = $.dataDash.prefix + behaviorName;
-            $("*[" + dataAttrName + "]").each(function(idx, element){
-                $.dataDash(element).bindBehavior(behaviorName, $(element).attr(dataAttrName));
-            });
+            $.dataDash("*[" + dataAttrName + "]").bindBehavior(behaviorName);
         }
     }
 
