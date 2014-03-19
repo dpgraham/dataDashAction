@@ -4,6 +4,3 @@ before_script:
   - npm install -g grunt
 
 script: grunt travis --verbose
-
-before_install:
-  - phantomjs 1.3
