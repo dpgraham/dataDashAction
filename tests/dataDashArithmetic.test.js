@@ -19,7 +19,7 @@ test( "Test shorthand form behaviour", function(){
     equal(s1.html(), "9.12e14");
 
     s1.setValOrHtml(999999999);
-    equal(s1.html(), "999.99m");
+    equal(s1.html(), "1000m");
 
     s1.setValOrHtml(1000000000);
     equal(s1.html(), "1b");
@@ -61,7 +61,7 @@ test( "Test shorthand form behaviour", function(){
     equal(s1.html(), "-9.12e14");
 
     s1.setValOrHtml(-999999999);
-    equal(s1.html(), "-999.99m");
+    equal(s1.html(), "-1000m");
 
     s1.setValOrHtml(-1000000000);
     equal(s1.html(), "-1b");
@@ -155,8 +155,8 @@ test( "Test sumOf/productOf on 6 summands/multiplicands, and test roundBy", func
     s4.trigger("change");
     equal(sum.getValOrHtml(), 21.02, "Sums add up to 21.02 on div");
     equal(sumInp.getValOrHtml(), 21.02, "Sums add up to 21.02 on input");
-    equal(prod.getValOrHtml(), 1103.89, "Prod still add up to 755.2 on div");
-    equal(prodInp.getValOrHtml(), 1103.89, "Prod still add up to 755.2 on input");
+    equal(prod.getValOrHtml(), 1103.9, "Prod still add up to 755.2 on div");
+    equal(prodInp.getValOrHtml(), 1103.9, "Prod still add up to 755.2 on input");
 
     // Clear out elements that were created
     $('.num').remove(); sum.remove(); prod.remove(); sumInp.remove(); prodInp.remove();

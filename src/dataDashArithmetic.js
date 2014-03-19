@@ -7,10 +7,7 @@
      * @returns {number}
      */
     var _roundBy = function(value, factor){
-        value = parseFloat(value);
-        factor = parseInt(factor);
-        factor = Math.pow(10, factor);
-        return parseInt(value * factor) / factor;
+        return +(parseFloat(value).toFixed(factor));
     };
 
     /**
