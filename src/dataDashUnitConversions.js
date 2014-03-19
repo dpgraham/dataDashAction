@@ -130,7 +130,7 @@
 
         // Bind to the 'unitFamilyChange' event
         $(this).bind("unitFamilyChange", onUnitFamilyChange);
-    }
+    };
 
     /**
      * Get the equivalent unit from the opposite unit family
@@ -169,8 +169,8 @@
             "kilogram": "pound",
             "kilograms": "pounds",
             "tonne": "ton",
-            "tonnes": "tons",
-        }
+            "tonnes": "tons"
+        };
 
         var usToMetric = {
 
@@ -189,16 +189,16 @@
             "pound": "kilogram",
             "ton": "tonne",
             "tons": "tonnes"
-        }
+        };
 
         if(unit_family=="us"){
             return metricToUS[unit_in] || unit_in;
         } else if(unit_family=="us"){
             return usToMetric[unit_in] || unit_in;
         } else {
-            return metricToUS[unit_in] || usToMetric[unit_in] || unit_in
+            return metricToUS[unit_in] || usToMetric[unit_in] || unit_in;
         }
-    }
+    };
 
     /**
      *
@@ -213,9 +213,9 @@
             } else {
                 $.dataDash(this).setValOrHtml(equivalentUnitNames(curr_value, unit_family));
             }
-        }
+        };
         $(this).bind("unitFamilyChange", onUnitFamilyChange);
-    }
+    };
 
     /**
      * Any HTML element with the attribute 'data-dg-unit'

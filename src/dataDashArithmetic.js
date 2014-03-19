@@ -47,7 +47,7 @@
             val = val + "";
             if(val.indexOf("e") < 0){
                 for(var i=0 ; i<val.length; i++){
-                    if(val[i] != 0 && val[i] != "."){
+                    if(val[i] !== 0 && val[i] !== "."){
                         break;
                     }
                 }
@@ -61,9 +61,9 @@
             } else {
                 var e_index = val.indexOf("e");
                 var exponent_part = "";
-                for(var i=e_index+2; i<val.length; i++){
-                    exponent_part += val[i];
-                };
+                for(var i2=e_index+2; i2<val.length; i2++){
+                    exponent_part += val[i2];
+                }
 
                 var output = val[0];
                 if(val[1]=="."){
@@ -135,7 +135,7 @@
 
         // Return the value with the sign restored
         return (isNegative ? "-" : "") + val;
-    }
+    };
 
     /**
      * Callback that binds the 'shorthand' behavior
@@ -155,7 +155,7 @@
 
                 // Set the value to the shorthand form
                 $.dataDash(ctx).setValOrHtml(_toShorthand(curr_value), true);
-            }
+            };
         }(this);
 
         $.dataDash(this).change(makeShorthandCallback);
@@ -225,11 +225,24 @@
      * @param attrValue
      */
     var roundByCallback = function(attrValue){
+
+        // Round it right away
         $(this).val( _roundBy($(this).val(), attrValue) );
 
-        $(this).change(function(){
+        // Create the 'onchange' event
+        var onChange = function(){
             $.dataDash(this).setValOrHtml( _roundBy($.dataDash(this).getValOrHtml(), attrValue), true );
-        });
+        };
+
+        $(this).change(onChange);
+
+        var unbindCallback = function(ctx, onChange){
+            return function(){
+                $.dataDash(ctx).unbind(onChange);
+            };
+        }(this, onChange);
+
+        return unbindCallback;
     };
 
 

@@ -104,7 +104,10 @@ test( "Test unit conversions", function() {
         div.trigger("unitFamilyChange", "metric");
         var expected_value = tc[i][3] / tc[i][1] * tc[i][3];
         decEqual(parseFloat(div.getValOrHtml()), expected_value, 10, tc[i][3] + " " + tc[i][2] + " converted to metric (per unit), should be " + expected_value + " " + tc[i][0]);
-    }
+
+        // Unbind
+        div.unbindBehavior("productOf");
+    };
 
     // Add elements with numbers in them to the body
     /*var s1 = $.dataDash("<div></div>").bindBehavior("unit", "m").setValOrHtml(100);
