@@ -160,5 +160,4 @@ test( "Test sumOf/productOf on 6 summands/multiplicands, and test roundBy", func
 
     // Clear out elements that were created
     $('.num').remove(); sum.remove(); prod.remove(); sumInp.remove(); prodInp.remove();
-
 });
