@@ -128,8 +128,14 @@
 
         };
 
-        // Bind to the 'unitFamilyChange' event
+        // Bind to the 'unitFamilyChange' event both on the individual element
+        // and on the document
         $(this).bind("unitFamilyChange", onUnitFamilyChange);
+        $(document).bind("unitFamilyChange", function(ctx){
+            return function(evt, unitFamily){
+                onUnitFamilyChange.call(ctx, evt, unitFamily);
+            }
+        }(this));
     };
 
     /**
