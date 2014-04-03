@@ -127,7 +127,7 @@
         } else if(val < 1){
             val = _toShorthandLessThanZero(val);
         } else {
-            val = val;
+            val = _roundBy(val, 2);
         }
 
         // Return the value with the sign restored

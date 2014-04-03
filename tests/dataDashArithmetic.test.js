@@ -12,6 +12,10 @@ test( "Test shorthand form behaviour", function(){
     equal(s1.getValOrHtml(), 1560000000, "Test that the actual value was backed up");
     equal(s1.html(), "1.56b", "Test that the shorthand for is 1.56b");
 
+    s1.setValOrHtml(1560000000.12345678);
+    equal(s1.getValOrHtml(), 1560000000.12345678, "Test that the actual value was backed up");
+    equal(s1.html(), "1.56b", "Test that the shorthand for is 1.56b");
+
     s1.setValOrHtml(1241234342103294123341234142);
     equal(s1.html(), "1.24e27");
 
@@ -32,6 +36,9 @@ test( "Test shorthand form behaviour", function(){
 
     s1.setValOrHtml(999999);
     equal(s1.html(), "999999");
+
+    s1.setValOrHtml(12345.123456789);
+    equal(s1.html(), "12345.12");
 
     s1.setValOrHtml(0.0000000000000001);
     equal(s1.html(), "1e-16");
