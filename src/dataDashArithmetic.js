@@ -110,7 +110,7 @@
      * @private
      */
     var _toShorthand = function(val){
-        val = parseFloat(val);
+        val = parseFloat(val) || 0;
 
         // Use an absolute value, we'll restore the sign at the end
         var isNegative = val < 0;
