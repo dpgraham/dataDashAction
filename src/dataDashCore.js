@@ -132,6 +132,7 @@
         // Call the function associated with this behavior (if there is one)
         if(typeof(behaviors[behaviorName].callback)=="function"){
             $(this).each(function(idx, element){
+                var value = $(element).attr($.dataDash.prefix + behaviorName);
                 behaviors[behaviorName].callback.call($.dataDash(element), value);
             });
         }
