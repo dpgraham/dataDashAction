@@ -7,7 +7,7 @@
      * @returns {number}
      */
     var _roundBy = function(value, factor){
-        return +(parseFloat(value).toFixed(factor));
+        return +(parseFloat(value).toFixed(factor)) || 0;
     };
 
     /**

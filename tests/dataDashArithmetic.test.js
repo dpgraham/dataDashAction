@@ -102,6 +102,14 @@ test( "Test shorthand form behaviour", function(){
 
 });
 
+test( "Test roundBy behavior", function(){
+    var s1 = $.dataDash("<div data-dg-roundBy='2'></div>").bindBehavior("roundBy").setValOrHtml("");
+    equal(s1.getValOrHtml(), 0, "Test that empty string is being set to zero");
+
+    s1.setValOrHtml("asfdasfdafd");
+    equal(s1.getValOrHtml(), 0, "Test that empty string is being set to zero");
+});
+
 test( "Test sumOf/productOf on 6 summands/multiplicands, and test roundBy", function() {
 
     // Add elements with numbers in them to the body
