@@ -63,9 +63,9 @@
         if(typeof(dataDashValue)!="undefined"){
             return dataDashValue;
         } else if(nodeName==="input" || nodeName==="textarea"){
-            return $(element).val();
+            return $.trim( $(element).val() );
         } else{
-            return $(element).html();
+            return $.trim( $(element).html() );
         }
     };
 
