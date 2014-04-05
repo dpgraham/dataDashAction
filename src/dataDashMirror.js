@@ -11,6 +11,7 @@
         // The attribute value is a unique key
         var mirror_id = attrValue;
 
+        // Callback for when one of the values is modified
         var onChange = function(mirror_id){
             return function(){
                 var value = $.dataDash(this).getValOrHtml();
@@ -18,6 +19,7 @@
             };
         }(mirror_id);
 
+        //
         $(this).change(onChange);
         $(this).trigger("change");
     };

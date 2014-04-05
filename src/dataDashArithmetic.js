@@ -143,15 +143,16 @@
 
                 // If it's an event callback, backup the value that the element was set to
                 val = val || (e && e.data);
-                if(typeof(val)!="undefined"){
-                    $.dataDash(ctx).backupValue(val);
-                }
 
                 // Get the current value of the element
                 var curr_value = $.dataDash(ctx).getValOrHtml();
 
                 // Set the value to the shorthand form
                 $.dataDash(ctx).setValOrHtml(_toShorthand(curr_value), true);
+
+                if(typeof(val)!="undefined"){
+                    $.dataDash(ctx).backupValue(val);
+                }
             };
         }(this);
 

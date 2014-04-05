@@ -31,6 +31,7 @@
     $.dataDash.fn.setValOrHtml = function(val, blockChangeEvent){
         $.each(this, function(idx, element){
             var nodeName = element.nodeName.toLowerCase();
+            $(element).removeAttr($.dataDash.prefix + "value");
             if(nodeName==="input"){
                 if($(element).val() == val){
                     return;
@@ -43,6 +44,7 @@
                 $(element).html(val);
             }
 
+            // Trigger change event (as long as we didn't opt to block it)
             if(!blockChangeEvent){
                 $(element).trigger("change", val);
             }
