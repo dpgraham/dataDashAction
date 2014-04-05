@@ -134,7 +134,7 @@
         $(document).bind("unitFamilyChange", function(ctx){
             return function(evt, unitFamily){
                 onUnitFamilyChange.call(ctx, evt, unitFamily);
-            }
+            };
         }(this));
     };
 

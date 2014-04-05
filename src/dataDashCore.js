@@ -31,7 +31,7 @@
     $.dataDash.fn.setValOrHtml = function(val, blockChangeEvent){
         $.each(this, function(idx, element){
             var nodeName = element.nodeName.toLowerCase();
-            if(nodeName==="input" || nodeName==="textarea"){
+            if(nodeName==="input"){
                 if($(element).val() == val){
                     return;
                 }
@@ -62,7 +62,7 @@
 
         if(typeof(dataDashValue)!="undefined"){
             return dataDashValue;
-        } else if(nodeName==="input" || nodeName==="textarea"){
+        } else if(nodeName==="input"){
             return $.trim( $(element).val() );
         } else{
             return $.trim( $(element).html() );
