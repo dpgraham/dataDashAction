@@ -64,7 +64,7 @@
      * @returns {*}
      * @private
      */
-    var _getEquivalentUnit = function(unit, unitFamilyOut){
+    $.dataDash.getEquivalentUnit = function(unit, unitFamilyOut){
         unitFamilyOut = unitFamilyOut.toLowerCase();
         if(unitFamilyOut==="us"){
             switch(unit){
@@ -106,14 +106,13 @@
             var unitIn = $.dataDash(this).attr($.dataDash.prefix + "unit");
 
             // What is the equivalent unit of measure in the provided unit family?
-            // var unitOut = _getEquivalentUnit(unitIn, unitFamily);
             var prev_unit = $(this).attr($.dataDash.prefix + "prevUnit");
 
             // Are we restoring the unit to it's h
-            if(prev_unit && _getEquivalentUnit(prev_unit, unitFamily) == prev_unit){
+            if(prev_unit && $.dataDash.getEquivalentUnit(prev_unit, unitFamily) == prev_unit){
                 unitOut = prev_unit;
             } else {
-                unitOut = _getEquivalentUnit(unitIn, unitFamily);
+                unitOut = $.dataDash.getEquivalentUnit(unitIn, unitFamily);
             }
 
             // Is this value number of units or per unit?
