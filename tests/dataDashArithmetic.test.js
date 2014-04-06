@@ -20,6 +20,23 @@ test( "Test shorthand form behaviour", function(){
     equal(s6.html(), '1,000,000');
     equal(s7.html(), '10,000,000');
 
+    s1.setValOrHtml(10.1234);
+    s2.setValOrHtml(100.1234);
+    s3.setValOrHtml(1000.1234);
+    s4.setValOrHtml(10000.1234);
+    s5.setValOrHtml(100000.1234);
+    s6.setValOrHtml(1000000.1234);
+    s7.setValOrHtml(10000000.1234);
+
+    equal(s1.html(), '10.1234');
+    equal(s2.html(), '100.1234');
+    equal(s3.html(), '1,000.1234');
+    equal(s4.html(), '10,000.1234');
+    equal(s5.html(), '100,000.1234');
+    equal(s6.html(), '1,000,000.1234');
+    equal(s7.html(), '10,000,000.1234');
+
+
     s1.remove();
     s2.remove();
     s3.remove();

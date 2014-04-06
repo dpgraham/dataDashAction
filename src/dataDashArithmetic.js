@@ -243,8 +243,25 @@
         return unbindCallback;
     };
 
+    /**
+     * Separate number by commas
+     * @param number
+     * @returns {string}
+     * @private
+     */
     var _addCommas = function(number){
         return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    };
+
+    /**
+     * Get the decimal part of a number
+     * @param number
+     * @returns {string}
+     * @private
+     */
+    var _getDecimalPart = function(number){
+        var match = number.match(/[^\.]*[\.]([\w\W]*)/);
+        return match ? ("." + match[1]) : "";
     };
 
     /**
@@ -252,13 +269,21 @@
      */
     var commaSeparatedCallback = function(){
         var onChange = function(){
+
+            // Get the value and then translate it into comma separated form
             var val = $.dataDash(this).getValOrHtml();
-            $.dataDash(this).setValOrHtml(_addCommas(val), true);
+            var comma_separated = _addCommas(parseInt(val,10)) + _getDecimalPart(val);
+
+            // Set the new value
+            $.dataDash(this).setValOrHtml(comma_separated, true);
+
+            // Backup the old value
             if(typeof(val)!="undefined"){
                 $.dataDash(this).backupValue(val);
             }
         };
 
+        // Bind to change event and also call it right away
         $(this).change(onChange);
         onChange.call(this);
     };
