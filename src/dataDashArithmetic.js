@@ -141,7 +141,6 @@
         var makeShorthandCallback = function(ctx){
             return function(e, val){
 
-                // If it's an event callback, backup the value that the element was set to
                 val = val || (e && e.data);
 
                 // Get the current value of the element
@@ -150,6 +149,7 @@
                 // Set the value to the shorthand form
                 $.dataDash(ctx).setValOrHtml(_toShorthand(curr_value), true);
 
+                // If it's an event callback, backup the value that the element was set to
                 if(typeof(val)!="undefined"){
                     $.dataDash(ctx).backupValue(val);
                 }
@@ -243,12 +243,33 @@
         return unbindCallback;
     };
 
+    var _addCommas = function(number){
+        return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    };
+
+    /**
+     * Function that binds the 'commaSeparated' behavior
+     */
+    var commaSeparatedCallback = function(){
+        var onChange = function(){
+            var val = $.dataDash(this).getValOrHtml();
+            $.dataDash(this).setValOrHtml(_addCommas(val), true);
+            if(typeof(val)!="undefined"){
+                $.dataDash(this).backupValue(val);
+            }
+        };
+
+        $(this).change(onChange);
+        onChange.call(this);
+    };
+
 
     // Register these four behaviors
     dataDash.registerBehavior("productOf", productOfCallback);
     dataDash.registerBehavior("sumOf", sumOfCallback);
     dataDash.registerBehavior("roundBy", roundByCallback);
     dataDash.registerBehavior("shorthand", shorthandFormCallback);
+    dataDash.registerBehavior("commaSeparated", commaSeparatedCallback);
 
 
 }($.dataDash));

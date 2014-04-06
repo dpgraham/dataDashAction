@@ -1,5 +1,37 @@
 test( "Test shorthand form behaviour", function(){
 
+    var s1 = $.dataDash("<div data-dg-commaSeparated></div>").setValOrHtml(10);
+    var s2 = $.dataDash("<div data-dg-commaSeparated></div>").setValOrHtml(100);
+    var s3 = $.dataDash("<div data-dg-commaSeparated></div>").setValOrHtml(1000);
+    var s4 = $.dataDash("<div data-dg-commaSeparated></div>").setValOrHtml(10000);
+    var s5 = $.dataDash("<div data-dg-commaSeparated></div>").setValOrHtml(100000);
+    var s6 = $.dataDash("<div data-dg-commaSeparated></div>").setValOrHtml(1000000);
+    var s7 = $.dataDash("<div data-dg-commaSeparated></div>").setValOrHtml(10000000);
+
+    $("body").append([s1,s2,s3,s4,s5,s6,s7]);
+
+    $.dataDash.bindBehaviorAll();
+
+    equal(s1.html(), '10');
+    equal(s2.html(), '100');
+    equal(s3.html(), '1,000');
+    equal(s4.html(), '10,000');
+    equal(s5.html(), '100,000');
+    equal(s6.html(), '1,000,000');
+    equal(s7.html(), '10,000,000');
+
+    s1.remove();
+    s2.remove();
+    s3.remove();
+    s4.remove();
+    s5.remove();
+    s6.remove();
+    s7.remove();
+
+});
+
+test( "Test shorthand form behaviour", function(){
+
     // Add elements with numbers in them to the body
     var s1 = $.dataDash("<div></div>").bindBehavior("shorthand").setValOrHtml(100000000);
 
