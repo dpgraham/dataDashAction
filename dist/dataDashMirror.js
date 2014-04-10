@@ -1,0 +1,1 @@
+!function(a){var b=function(b){var c=b,d=function(b){return function(){var c=a.dataDash(this).getValOrHtml();a.dataDash("*[data-dg-mirror='"+b+"']").setValOrHtml(c)}}(c);a(this).change(d),a(this).trigger("change")};a.dataDash.registerBehavior("mirror",b)}(jQuery);

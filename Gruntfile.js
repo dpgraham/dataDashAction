@@ -51,6 +51,9 @@ module.exports = function(grunt) {
                 }, {
                     src: 'src/dataDashUnitConversions.js',
                     dest: 'dist/dataDashUnitConversions.js'
+                }, {
+                    src: 'src/dataDashMirror.js',
+                    dest: 'dist/dataDashMirror.js'
                 }]
             }
         }
@@ -58,5 +61,6 @@ module.exports = function(grunt) {
 
     // Default task(s).
     grunt.registerTask('travis', ['connect:server', 'jshint', 'qunit']);
+    grunt.registerTask('default', ['travis', 'uglify']);
 
 };
