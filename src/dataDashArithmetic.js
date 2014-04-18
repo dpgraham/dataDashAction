@@ -240,6 +240,8 @@
             };
         }(this, onChange);
 
+        onChange.call($(this));
+
         return unbindCallback;
     };
 
