@@ -4,12 +4,12 @@
     "author": "dpgraham",
     "description": "Use data-* attributes to add behaviours to your HTML markup",
     "dependencies": {
-        "grunt-cli": "~0.1.13",
-        "bower": "~1.2.8",
-        "grunt-contrib-jshint": "~0.7.0",
-        "grunt-contrib-qunit": "~0.4.0",
-        "grunt-contrib-uglify": "~0.3.3",
-        "grunt-contrib-connect": "~0.7.1"
+        "grunt-cli": "~1.2.0",
+        "bower": "~1.8.2",
+        "grunt-contrib-jshint": "~1.1.0",
+        "grunt-contrib-qunit": "~2.0.0",
+        "grunt-contrib-uglify": "~3.3.0",
+        "grunt-contrib-connect": "~1.0.2"
     },
 
     "scripts": {
