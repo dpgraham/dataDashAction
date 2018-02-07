@@ -1,6 +1,8 @@
 dataDashAction
 ==============
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/dpgraham/dataDashAction.svg)](https://greenkeeper.io/)
+
 An extensible, jQuery plugin for automating dynamic behavior on your HTML
 
 (see http://dpgraham.github.io/dataDashAction/)
